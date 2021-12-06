@@ -19,7 +19,6 @@ public class Product {
     @Column(precision=10, scale=2)
     private Double price;
     private String title;
-    @Lob
     private String description;
     private String image;
 
