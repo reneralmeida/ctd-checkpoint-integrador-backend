@@ -4,12 +4,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.function.RouterFunction;
+import org.springframework.web.servlet.function.ServerRequest;
+import org.springframework.web.servlet.function.ServerResponse;
 
 import java.util.Arrays;
+import java.util.BitSet;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.web.servlet.function.RequestPredicates.*;
+import static org.springframework.web.servlet.function.RouterFunctions.route;
 
 @Configuration
 @EnableWebMvc
@@ -34,5 +43,16 @@ public class WebConfig implements WebMvcConfigurer {
 
             }
         };
+    }
+
+    @Bean
+    RouterFunction<ServerResponse> routes() {
+        return route(POST("/create")
+                .and(accept(APPLICATION_JSON))
+                .and(contentType(APPLICATION_JSON)), serverRequest -> create(serverRequest));
+    }
+
+    private ServerResponse create(ServerRequest serverRequest) {
+        return ServerResponse.accepted().build();
     }
 }
