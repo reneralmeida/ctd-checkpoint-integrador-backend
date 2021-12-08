@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class CategoriesController {
 
@@ -20,6 +19,7 @@ public class CategoriesController {
     private IService<Category> service;
 
     @GetMapping("/products/categories")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<List<String>> getAll(){
         return ResponseEntity.ok(
                 service.getAll().stream().map( CategoryDTO::categoryToDTO).map( CategoryDTO::getName).collect(Collectors.toList())
