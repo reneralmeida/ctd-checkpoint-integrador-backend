@@ -29,4 +29,5 @@ public class CategoryService implements IService<Category> {
     public List<Category> getAllByName(String type) {
         return repository.findByNameLikeIgnoreCase(type);
     }
+
 }
